@@ -18,6 +18,11 @@
 
         <activity android:name=".MyBottomNavActivity"
             android:theme="@style/Theme.AndroidExample">
+
+        </activity>
+
+        <activity android:name=".TabActivity"
+            android:theme="@style/Theme.AndroidExample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

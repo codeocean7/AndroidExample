@@ -7,9 +7,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.NavigationUI
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class MyBottomNavActivity :AppCompatActivity()
+class MyBottomNavActivity : AppCompatActivity()
 {
-
 
     private var mAppBarConfiguration: AppBarConfiguration? = null
 
@@ -27,8 +26,6 @@ class MyBottomNavActivity :AppCompatActivity()
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration!!)
 
         NavigationUI.setupWithNavController(bottom_nav_home, navController)
-
-
 
     }
 }
