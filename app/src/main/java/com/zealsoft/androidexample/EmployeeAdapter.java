@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,6 +34,13 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ItemVi
 
         holder.txtName.setText(emp.getEmpName());
         holder.txtSalary.setText(String.valueOf(emp.getEmpSalary()));
+
+        holder.txtName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ctx,String.valueOf(position),Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
