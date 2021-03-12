@@ -21,6 +21,7 @@ import java.util.List;
 
 public class TabActivity extends AppCompatActivity
 {
+    //step 2
     ViewPager mViewPager;
     TabLayout mTabLayout;
 
@@ -29,19 +30,22 @@ public class TabActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tab_activity_lay);
 
+        //step 3
         mTabLayout=findViewById(R.id.tablelayout);
         mViewPager=findViewById(R.id.viewpager_id);
 
+        //step 4
         MyViewPagerAdapter myViewPagerAdapter=new MyViewPagerAdapter(getSupportFragmentManager());
         myViewPagerAdapter.addFragment(new ChatFrag(),"CHAT");
         myViewPagerAdapter.addFragment(new StatusFrag(),"STATUS");
         myViewPagerAdapter.addFragment(new CallFrag(),"CALL");
 
+        //step 5
         mViewPager.setAdapter(myViewPagerAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 
-
+    //step 1
     class MyViewPagerAdapter extends FragmentPagerAdapter
     {
 
@@ -55,17 +59,20 @@ public class TabActivity extends AppCompatActivity
         @NonNull
         @Override
         public Fragment getItem(int position) {
+
             return listFragment.get(position);
         }
 
         @Override
         public int getCount() {
+
             return listFragment.size();
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
+
             return listTitles.get(position);
         }
 

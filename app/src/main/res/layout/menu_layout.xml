@@ -3,6 +3,20 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/mLayout">
+    android:id="@+id/mLayout"
+    android:gravity="center">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open PopUp Menu"
+        android:id="@+id/btnPopUp"/>
+
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Open Context Menu"
+        android:id="@+id/btnVtxMenu"/>
 
 </LinearLayout>
