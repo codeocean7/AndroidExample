@@ -34,6 +34,11 @@
 
         <activity android:name=".MenuActivity"
             android:theme="@style/Theme.AndroidExample">
+
+        </activity>
+
+        <activity android:name=".DialogActivity"
+            android:theme="@style/Theme.AndroidExample">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
