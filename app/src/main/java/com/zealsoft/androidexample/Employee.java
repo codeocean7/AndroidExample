@@ -1,5 +1,8 @@
 package com.zealsoft.androidexample;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Employee {
 
     String empName;
@@ -28,5 +31,15 @@ public class Employee {
 
     public String getEmpAddress() {
         return empAddress;
+    }
+
+    public Map<String,Object> toMap(){
+        Map<String,Object> mMap=new HashMap<>();
+        mMap.put("EmpName",this.empName);
+        mMap.put("EmpSalary",this.empSalary);
+        mMap.put("EmpDesignation",this.empDesignation);
+        mMap.put("EmpAddress",this.empAddress);
+
+        return  mMap;
     }
 }
