@@ -1,17 +1,29 @@
 package com.zealsoft.androidexample;
 
 import android.os.Bundle;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeListActivity extends AppCompatActivity
 {
+
+    FirebaseFirestore firestoreDB;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -20,33 +32,31 @@ public class EmployeeListActivity extends AppCompatActivity
 
         RecyclerView rvEmpList=findViewById(R.id.rvEmpList);
 
-        Employee e=new Employee("Ashish",45000,"Soft Developer","Bsl");
-        Employee e1=new Employee("Ashish",45000,"Soft Developer","Bsl");
-        Employee e2=new Employee("Ashish",45000,"Soft Developer","Bsl");
-        Employee e3=new Employee("Ashish",45000,"Soft Developer","Bsl");
-        Employee e4=new Employee("Ashish",45000,"Soft Developer","Bsl");
-        Employee e5=new Employee("Ashish",45000,"Soft Developer","Bsl");
-        Employee e6=new Employee("Ashish",45000,"Soft Developer","Bsl");
-        Employee e7=new Employee("Ashish",45000,"Soft Developer","Bsl");
-        Employee e8=new Employee("Ashish",45000,"Soft Developer","Bsl");
-        Employee e9=new Employee("Ashish",45000,"Soft Developer","Bsl");
+        firestoreDB=FirebaseFirestore.getInstance();
 
-        List<Employee> empList=new ArrayList<>();
+        firestoreDB.collection("EMPLOYEES")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()){
+                            List<Employee> empList=new ArrayList<>();
 
-        empList.add(e);
-        empList.add(e1);
-        empList.add(e2);
-        empList.add(e3);
-        empList.add(e4);
-        empList.add(e5);
-        empList.add(e6);
-        empList.add(e7);
-        empList.add(e8);
-        empList.add(e9);
+                            for (DocumentSnapshot doc:task.getResult()){
+                                Employee emp=doc.toObject(Employee.class);
+                                empList.add(emp);
+                            }
+                            rvEmpList.setLayoutManager(new LinearLayoutManager(EmployeeListActivity.this,LinearLayoutManager.VERTICAL,false));
+                            rvEmpList.setAdapter(new EmployeeAdapter(empList,EmployeeListActivity.this));
 
-        rvEmpList.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-        rvEmpList.setAdapter(new EmployeeAdapter(empList,this));
-
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(EmployeeListActivity.this,"Fail...",Toast.LENGTH_LONG).show();
+            }
+        });
 
     }
 }
