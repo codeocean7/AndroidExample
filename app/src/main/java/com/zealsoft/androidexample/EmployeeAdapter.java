@@ -1,6 +1,7 @@
 package com.zealsoft.androidexample;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,9 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ItemVi
         holder.txtName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ctx,String.valueOf(position),Toast.LENGTH_LONG).show();
+                Intent i=new Intent(ctx,UpdateEmpActivity.class);
+                i.putExtra("emp",emp);
+                ctx.startActivity(i);
             }
         });
     }

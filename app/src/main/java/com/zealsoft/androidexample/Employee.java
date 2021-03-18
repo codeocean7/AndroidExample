@@ -4,12 +4,13 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Employee {
+public class Employee implements Serializable {
 
     String empName;
     int empSalary;
     String empDesignation;
     String empAddress;
+    String empId;
 
     public Employee(String empName, int empSalary, String empDesignation, String empAddress) {
         this.empName = empName;
@@ -19,6 +20,14 @@ public class Employee {
     }
 
     public Employee() {
+    }
+
+    public String getEmpId() {
+        return empId;
+    }
+
+    public void setEmpId(String empId) {
+        this.empId = empId;
     }
 
     public String getEmpName() {

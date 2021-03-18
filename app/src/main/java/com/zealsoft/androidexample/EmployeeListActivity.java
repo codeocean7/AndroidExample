@@ -44,6 +44,7 @@ public class EmployeeListActivity extends AppCompatActivity
 
                             for (DocumentSnapshot doc:task.getResult()){
                                 Employee emp=doc.toObject(Employee.class);
+                                emp.setEmpId(doc.getId());
                                 empList.add(emp);
                             }
                             rvEmpList.setLayoutManager(new LinearLayoutManager(EmployeeListActivity.this,LinearLayoutManager.VERTICAL,false));

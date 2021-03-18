@@ -50,7 +50,11 @@
             android:label="Form">
 
         </activity>
+        <activity android:name=".UpdateEmpActivity"
+            android:theme="@style/Theme.AndroidExample"
+            android:label="Update ">
 
+        </activity>
 
     </application>
 
