@@ -5,11 +5,16 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
@@ -18,9 +23,12 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ItemVi
     List<Employee> empList;
     Context ctx;
 
+    FirebaseFirestore firestoreDB;
+
     public EmployeeAdapter(List<Employee> empList, Context ctx) {
         this.empList = empList;
         this.ctx = ctx;
+        this.firestoreDB=FirebaseFirestore.getInstance();
     }
 
     @NonNull
@@ -44,6 +52,32 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ItemVi
                 ctx.startActivity(i);
             }
         });
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                firestoreDB.collection("EMPLOYEES")
+                        .document(emp.getEmpId())
+                        .delete()
+                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void aVoid) {
+                                Toast.makeText(ctx, "Deleted...", Toast.LENGTH_SHORT).show();
+
+                                empList.remove(position);
+                                //refresh the adapter
+                                notifyDataSetChanged();
+                            }
+                        }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(ctx, "Delete FAil", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+
+
     }
 
     @Override
@@ -54,12 +88,15 @@ public class EmployeeAdapter extends RecyclerView.Adapter<EmployeeAdapter.ItemVi
     class ItemViewHolder extends RecyclerView.ViewHolder{
 
         TextView txtName,txtSalary;
+        Button btnDelete;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
 
             this.txtName=itemView.findViewById(R.id.txtEmpName);
             this.txtSalary=itemView.findViewById(R.id.txtEmpSalary);
+            this.btnDelete=itemView.findViewById(R.id.btnDelete);
+
         }
     }
 }
