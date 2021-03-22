@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -34,7 +35,19 @@ public class EmployeeListActivity extends AppCompatActivity
 
         firestoreDB=FirebaseFirestore.getInstance();
 
+        List<String> desValues=new ArrayList<>();
+        desValues.add("Soft Dev");
+        desValues.add("Test Eng");
+
         firestoreDB.collection("EMPLOYEES")
+                //.whereIn("empDesignation",desValues)
+                //.whereGreaterThan("empSalary",35000)
+                //.whereEqualTo("empName","Ashish")
+                //.whereGreaterThan("empSalary",35000)
+                //.whereEqualTo("empDesignation","Soft Dev")
+
+                //.orderBy("empSalary", Query.Direction.DESCENDING)
+                //.limit(3)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
