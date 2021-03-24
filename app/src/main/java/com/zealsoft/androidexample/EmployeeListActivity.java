@@ -45,9 +45,13 @@ public class EmployeeListActivity extends AppCompatActivity
                 //.whereEqualTo("empName","Ashish")
                 //.whereGreaterThan("empSalary",35000)
                 //.whereEqualTo("empDesignation","Soft Dev")
-
-                //.orderBy("empSalary", Query.Direction.DESCENDING)
                 //.limit(3)
+                .orderBy("empSalary", Query.Direction.DESCENDING)
+                //.endAt(30000)
+                //.startAt(30000)
+                //.endBefore(25000)
+                //.startAfter(55000)
+
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
