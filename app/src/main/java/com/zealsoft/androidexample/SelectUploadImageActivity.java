@@ -1,6 +1,7 @@
 package com.zealsoft.androidexample;
 
 import android.Manifest;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -9,12 +10,23 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
 import java.io.IOException;
+import java.util.UUID;
 
 public class SelectUploadImageActivity extends AppCompatActivity {
 
@@ -24,6 +36,9 @@ public class SelectUploadImageActivity extends AppCompatActivity {
 
 
     int PICK_IMAGE_REQUEST=10;
+
+    FirebaseStorage mStorage;
+    StorageReference rootReference;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +51,10 @@ public class SelectUploadImageActivity extends AppCompatActivity {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
         },1);
 
+        //storage initialization
+        mStorage=FirebaseStorage.getInstance();
+        rootReference=mStorage.getReference();
+
         btnSelect=findViewById(R.id.btnSelectImage);
         btnUpload=findViewById(R.id.btnUploadImage);
 
@@ -45,6 +64,13 @@ public class SelectUploadImageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 selectImage();
+            }
+        });
+
+        btnUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                uploadImage();
             }
         });
     }
@@ -58,6 +84,36 @@ public class SelectUploadImageActivity extends AppCompatActivity {
                         intent,
                         "Select Image from here..."),
                 PICK_IMAGE_REQUEST);
+    }
+
+    private void uploadImage(){
+        ProgressDialog progressDialog=new ProgressDialog(this);
+        progressDialog.setTitle("Uploading..");
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+
+        StorageReference fileRef=rootReference.child(UUID.randomUUID().toString()+".jpg");
+
+        fileRef.putFile(filePath)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        progressDialog.dismiss();
+                        Toast.makeText(SelectUploadImageActivity.this,"Upload Success..",Toast.LENGTH_LONG).show();
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progressDialog.dismiss();
+                Toast.makeText(SelectUploadImageActivity.this,"Upload Fail..",Toast.LENGTH_LONG).show();
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                double progress = (100.0 * snapshot.getBytesTransferred() / snapshot.getTotalByteCount());
+                progressDialog.setMessage("Uploaded " + (int)progress + "%");
+            }
+        });
     }
 
     @Override
