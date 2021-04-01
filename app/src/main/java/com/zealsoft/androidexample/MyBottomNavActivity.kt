@@ -16,6 +16,7 @@ class MyBottomNavActivity : AppCompatActivity()
         super.onCreate(savedInstanceState)
         setContentView(R.layout.btm_activity)
 
+
         val bottom_nav_home = findViewById<BottomNavigationView>(R.id.bottom_nav_home)
 
         mAppBarConfiguration = AppBarConfiguration.Builder(R.id.mnHome,
