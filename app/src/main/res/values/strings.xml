@@ -11,4 +11,7 @@
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
 
     <string name="message">Hi..Android</string>
+
+
+    <string name="client_id">616016882056-3l4pmpqaft3qsuaba86o8jvcsq3ictc8.apps.googleusercontent.com</string>
 </resources>

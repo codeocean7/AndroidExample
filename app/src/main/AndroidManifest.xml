@@ -63,15 +63,21 @@
 
         <activity android:name=".AuthWork.RegistrationActivity"
             android:theme="@style/Theme.AndroidExample">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
 
         <activity android:name=".AuthWork.LoginActivity"
             android:theme="@style/Theme.AndroidExample">
 
+        </activity>
+
+        <activity android:name=".AuthWork.GoogleSignInActivity"
+            android:theme="@style/Theme.AndroidExample"
+            android:label="Goog;e Auth">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
     </application>
 
