@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -23,6 +24,7 @@ public class  StatusFrag extends Fragment {
 
     CircleImageView imgProf;
     TextView txtEmail;
+    Button btnSignOut;
 
     FirebaseAuth mAuth;
 
@@ -38,6 +40,7 @@ public class  StatusFrag extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.frag_status,container,false);
+
     }
 
     @Override
@@ -45,8 +48,10 @@ public class  StatusFrag extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         imgProf=view.findViewById(R.id.imgProfile);
         txtEmail=view.findViewById(R.id.txtEmail);
+        btnSignOut=view.findViewById(R.id.btnSignOut);
 
         mAuth=FirebaseAuth.getInstance();
+
         FirebaseUser user=mAuth.getCurrentUser();
 
         Uri photoUrl=user.getPhotoUrl();
@@ -56,5 +61,13 @@ public class  StatusFrag extends Fragment {
                 .into(imgProf);
 
         txtEmail.setText(user.getEmail());
+
+        btnSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mAuth.signOut();
+                getActivity().finish();
+            }
+        });
     }
 }
