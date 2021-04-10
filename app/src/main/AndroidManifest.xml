@@ -74,6 +74,12 @@
         <activity android:name=".AuthWork.GoogleSignInActivity"
             android:theme="@style/Theme.AndroidExample"
             android:label="Goog;e Auth">
+
+        </activity>
+
+        <activity android:name=".VideoUploadActivity"
+            android:theme="@style/Theme.AndroidExample"
+            android:label="Video Upload">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

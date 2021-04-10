@@ -35,6 +35,8 @@ public class SelectUploadImageActivity extends AppCompatActivity {
     ImageView imgShow;
     private Uri filePath;
 
+    private String picUrl="";
+
 
     int PICK_IMAGE_REQUEST=10;
 
@@ -102,8 +104,11 @@ public class SelectUploadImageActivity extends AppCompatActivity {
                         progressDialog.dismiss();
 
                         fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+
                             @Override
                             public void onSuccess(Uri uri) {
+                                picUrl=uri.toString();
+
                                 Log.d("DOWNLOAD URL",uri.toString());
                             }
                         });
